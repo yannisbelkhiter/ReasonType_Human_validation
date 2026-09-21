@@ -1,0 +1,892 @@
+{
+  "annotator_id": "Yannis",
+  "exported_at": "2026-09-21T10:05:06.913Z",
+  "n_items": 52,
+  "n_answered": 52,
+  "annotations": [
+    {
+      "sample_id": 175,
+      "step_id": 58,
+      "taskA_step_type": "Quadrant/Edge Case Consideration",
+      "taskA_options_shown": [
+        "Pattern Recognition / Symmetry",
+        "Quadrant/Edge Case Consideration",
+        "Formula Substitution / Plugging In",
+        "Other"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 58469,
+      "timestamp": "2026-09-21T09:48:34.021Z"
+    },
+    {
+      "sample_id": 864,
+      "step_id": 8,
+      "taskA_step_type": "Definition Recall",
+      "taskA_options_shown": [
+        "Quadrant/Edge Case Consideration",
+        "Definition Recall",
+        "Context Repetition / Paraphrasing",
+        "Pattern Recognition / Symmetry"
+      ],
+      "taskB_role": "constructive",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 33784,
+      "timestamp": "2026-09-21T09:49:07.808Z"
+    },
+    {
+      "sample_id": 359,
+      "step_id": 96,
+      "taskA_step_type": "Pattern Recognition / Symmetry",
+      "taskA_options_shown": [
+        "Pattern Recognition / Symmetry",
+        "Other",
+        "Definition Recall",
+        "Symbolic Transformation / Rewriting Sums"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 21756,
+      "timestamp": "2026-09-21T09:49:29.570Z"
+    },
+    {
+      "sample_id": 728,
+      "step_id": 51,
+      "taskA_step_type": "Pattern Recognition / Symmetry",
+      "taskA_options_shown": [
+        "Verification / Sanity Check",
+        "Pattern Recognition / Symmetry",
+        "Quadrant/Edge Case Consideration",
+        "Meta-Cognition / Self-Talk"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 21827,
+      "timestamp": "2026-09-21T09:49:51.409Z"
+    },
+    {
+      "sample_id": 802,
+      "step_id": 42,
+      "taskA_step_type": "Formula Substitution / Plugging In",
+      "taskA_options_shown": [
+        "Heuristics / Intuition",
+        "Formula Substitution / Plugging In",
+        "Definition Recall",
+        "Quadrant/Edge Case Consideration"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 18047,
+      "timestamp": "2026-09-21T09:50:09.458Z"
+    },
+    {
+      "sample_id": 490,
+      "step_id": 71,
+      "taskA_step_type": "Numerical Approximation / Interpretation",
+      "taskA_options_shown": [
+        "Pattern Recognition / Symmetry",
+        "Numerical Approximation / Interpretation",
+        "Problem Re-statement / Setup",
+        "Verification / Sanity Check"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 21548,
+      "timestamp": "2026-09-21T09:50:31.037Z"
+    },
+    {
+      "sample_id": 359,
+      "step_id": 97,
+      "taskA_step_type": "Definition Recall",
+      "taskA_options_shown": [
+        "Context Repetition / Paraphrasing",
+        "Definition Recall",
+        "Final Conclusion / Boxed Answer",
+        "Numerical Approximation / Interpretation"
+      ],
+      "taskB_role": "constructive",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 24383,
+      "timestamp": "2026-09-21T09:50:55.425Z"
+    },
+    {
+      "sample_id": 171,
+      "step_id": 22,
+      "taskA_step_type": "Final Conclusion / Boxed Answer",
+      "taskA_options_shown": [
+        "Pattern Recognition / Symmetry",
+        "Definition Recall",
+        "Problem Re-statement / Setup",
+        "Final Conclusion / Boxed Answer"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 25226,
+      "timestamp": "2026-09-21T09:51:20.661Z"
+    },
+    {
+      "sample_id": 339,
+      "step_id": 274,
+      "taskA_step_type": "Problem Re-statement / Setup",
+      "taskA_options_shown": [
+        "Problem Re-statement / Setup",
+        "Definition Recall",
+        "Alternative Approach Exploration",
+        "Other"
+      ],
+      "taskB_role": "constructive",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 27437,
+      "timestamp": "2026-09-21T09:51:48.108Z"
+    },
+    {
+      "sample_id": 740,
+      "step_id": 43,
+      "taskA_step_type": "Alternative Approach Exploration",
+      "taskA_options_shown": [
+        "Final Conclusion / Boxed Answer",
+        "Quadrant/Edge Case Consideration",
+        "Alternative Approach Exploration",
+        "Verification / Sanity Check"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 8475,
+      "timestamp": "2026-09-21T09:51:56.596Z"
+    },
+    {
+      "sample_id": 313,
+      "step_id": 4,
+      "taskA_step_type": "Definition Recall",
+      "taskA_options_shown": [
+        "Final Conclusion / Boxed Answer",
+        "Formula Substitution / Plugging In",
+        "Context Repetition / Paraphrasing",
+        "Definition Recall"
+      ],
+      "taskB_role": "constructive",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 26807,
+      "timestamp": "2026-09-21T09:52:23.405Z"
+    },
+    {
+      "sample_id": 599,
+      "step_id": 24,
+      "taskA_step_type": "Formula Substitution / Plugging In",
+      "taskA_options_shown": [
+        "Alternative Approach Exploration",
+        "Other",
+        "Formula Substitution / Plugging In",
+        "Symbolic Transformation / Rewriting Sums"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 23211,
+      "timestamp": "2026-09-21T09:52:46.623Z"
+    },
+    {
+      "sample_id": 113,
+      "step_id": 11,
+      "taskA_step_type": "Final Conclusion / Boxed Answer",
+      "taskA_options_shown": [
+        "Definition Recall",
+        "Meta-Cognition / Self-Talk",
+        "Final Conclusion / Boxed Answer",
+        "Symbolic Transformation / Rewriting Sums"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 55887,
+      "timestamp": "2026-09-21T09:53:42.528Z"
+    },
+    {
+      "sample_id": 732,
+      "step_id": 0,
+      "taskA_step_type": "Definition Recall",
+      "taskA_options_shown": [
+        "Alternative Approach Exploration",
+        "Definition Recall",
+        "Heuristics / Intuition",
+        "Verification / Sanity Check"
+      ],
+      "taskB_role": "constructive",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 34431,
+      "timestamp": "2026-09-21T09:54:16.975Z"
+    },
+    {
+      "sample_id": 2,
+      "step_id": 134,
+      "taskA_step_type": "Meta-Cognition / Self-Talk",
+      "taskA_options_shown": [
+        "Quadrant/Edge Case Consideration",
+        "Pattern Recognition / Symmetry",
+        "Numerical Approximation / Interpretation",
+        "Meta-Cognition / Self-Talk"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 10046,
+      "timestamp": "2026-09-21T09:54:27.023Z"
+    },
+    {
+      "sample_id": 937,
+      "step_id": 18,
+      "taskA_step_type": "Alternative Approach Exploration",
+      "taskA_options_shown": [
+        "Heuristics / Intuition",
+        "Context Repetition / Paraphrasing",
+        "Formula Substitution / Plugging In",
+        "Alternative Approach Exploration"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 26031,
+      "timestamp": "2026-09-21T09:54:53.060Z"
+    },
+    {
+      "sample_id": 684,
+      "step_id": 2,
+      "taskA_step_type": "Verification / Sanity Check",
+      "taskA_options_shown": [
+        "Problem Re-statement / Setup",
+        "Other",
+        "Definition Recall",
+        "Verification / Sanity Check"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 23470,
+      "timestamp": "2026-09-21T09:55:16.543Z"
+    },
+    {
+      "sample_id": 374,
+      "step_id": 25,
+      "taskA_step_type": "Formula Substitution / Plugging In",
+      "taskA_options_shown": [
+        "Verification / Sanity Check",
+        "Numerical Approximation / Interpretation",
+        "Heuristics / Intuition",
+        "Formula Substitution / Plugging In"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 21863,
+      "timestamp": "2026-09-21T09:55:38.410Z"
+    },
+    {
+      "sample_id": 295,
+      "step_id": 37,
+      "taskA_step_type": "Formula Substitution / Plugging In",
+      "taskA_options_shown": [
+        "Problem Re-statement / Setup",
+        "Formula Substitution / Plugging In",
+        "Final Conclusion / Boxed Answer",
+        "Heuristics / Intuition"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 13057,
+      "timestamp": "2026-09-21T09:55:51.473Z"
+    },
+    {
+      "sample_id": 635,
+      "step_id": 13,
+      "taskA_step_type": "Verification / Sanity Check",
+      "taskA_options_shown": [
+        "Quadrant/Edge Case Consideration",
+        "Definition Recall",
+        "Context Repetition / Paraphrasing",
+        "Verification / Sanity Check"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 9518,
+      "timestamp": "2026-09-21T09:56:01.007Z"
+    },
+    {
+      "sample_id": 456,
+      "step_id": 21,
+      "taskA_step_type": "Heuristics / Intuition",
+      "taskA_options_shown": [
+        "Symbolic Transformation / Rewriting Sums",
+        "Heuristics / Intuition",
+        "Verification / Sanity Check",
+        "Pattern Recognition / Symmetry"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 32576,
+      "timestamp": "2026-09-21T09:56:33.590Z"
+    },
+    {
+      "sample_id": 114,
+      "step_id": 9,
+      "taskA_step_type": "Meta-Cognition / Self-Talk",
+      "taskA_options_shown": [
+        "Problem Re-statement / Setup",
+        "Meta-Cognition / Self-Talk",
+        "Quadrant/Edge Case Consideration",
+        "Context Repetition / Paraphrasing"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 12254,
+      "timestamp": "2026-09-21T09:56:45.857Z"
+    },
+    {
+      "sample_id": 337,
+      "step_id": 27,
+      "taskA_step_type": "Verification / Sanity Check",
+      "taskA_options_shown": [
+        "Verification / Sanity Check",
+        "Quadrant/Edge Case Consideration",
+        "Pattern Recognition / Symmetry",
+        "Context Repetition / Paraphrasing"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 16481,
+      "timestamp": "2026-09-21T09:57:02.360Z"
+    },
+    {
+      "sample_id": 352,
+      "step_id": 43,
+      "taskA_step_type": "Pattern Recognition / Symmetry",
+      "taskA_options_shown": [
+        "Pattern Recognition / Symmetry",
+        "Alternative Approach Exploration",
+        "Problem Re-statement / Setup",
+        "Context Repetition / Paraphrasing"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 10677,
+      "timestamp": "2026-09-21T09:57:13.044Z"
+    },
+    {
+      "sample_id": 591,
+      "step_id": 54,
+      "taskA_step_type": "Verification / Sanity Check",
+      "taskA_options_shown": [
+        "Quadrant/Edge Case Consideration",
+        "Verification / Sanity Check",
+        "Final Conclusion / Boxed Answer",
+        "Pattern Recognition / Symmetry"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 7213,
+      "timestamp": "2026-09-21T09:57:20.259Z"
+    },
+    {
+      "sample_id": 110,
+      "step_id": 24,
+      "taskA_step_type": "Formula Substitution / Plugging In",
+      "taskA_options_shown": [
+        "Formula Substitution / Plugging In",
+        "Numerical Approximation / Interpretation",
+        "Problem Re-statement / Setup",
+        "Final Conclusion / Boxed Answer"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 20977,
+      "timestamp": "2026-09-21T09:57:41.240Z"
+    },
+    {
+      "sample_id": 537,
+      "step_id": 71,
+      "taskA_step_type": "Verification / Sanity Check",
+      "taskA_options_shown": [
+        "Pattern Recognition / Symmetry",
+        "Formula Substitution / Plugging In",
+        "Verification / Sanity Check",
+        "Context Repetition / Paraphrasing"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 18577,
+      "timestamp": "2026-09-21T09:57:59.822Z"
+    },
+    {
+      "sample_id": 718,
+      "step_id": 154,
+      "taskA_step_type": "Verification / Sanity Check",
+      "taskA_options_shown": [
+        "Verification / Sanity Check",
+        "Numerical Approximation / Interpretation",
+        "Definition Recall",
+        "Final Conclusion / Boxed Answer"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 12650,
+      "timestamp": "2026-09-21T09:58:12.478Z"
+    },
+    {
+      "sample_id": 15,
+      "step_id": 39,
+      "taskA_step_type": "Problem Re-statement / Setup",
+      "taskA_options_shown": [
+        "Pattern Recognition / Symmetry",
+        "Quadrant/Edge Case Consideration",
+        "Problem Re-statement / Setup",
+        "Final Conclusion / Boxed Answer"
+      ],
+      "taskB_role": "constructive",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 30252,
+      "timestamp": "2026-09-21T09:58:42.740Z"
+    },
+    {
+      "sample_id": 342,
+      "step_id": 22,
+      "taskA_step_type": "Problem Re-statement / Setup",
+      "taskA_options_shown": [
+        "Verification / Sanity Check",
+        "Problem Re-statement / Setup",
+        "Pattern Recognition / Symmetry",
+        "Meta-Cognition / Self-Talk"
+      ],
+      "taskB_role": "constructive",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 13522,
+      "timestamp": "2026-09-21T09:58:56.278Z"
+    },
+    {
+      "sample_id": 478,
+      "step_id": 35,
+      "taskA_step_type": "Final Conclusion / Boxed Answer",
+      "taskA_options_shown": [
+        "Final Conclusion / Boxed Answer",
+        "Meta-Cognition / Self-Talk",
+        "Context Repetition / Paraphrasing",
+        "Quadrant/Edge Case Consideration"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 6754,
+      "timestamp": "2026-09-21T09:59:03.060Z"
+    },
+    {
+      "sample_id": 998,
+      "step_id": 123,
+      "taskA_step_type": "Quadrant/Edge Case Consideration",
+      "taskA_options_shown": [
+        "Symbolic Transformation / Rewriting Sums",
+        "Verification / Sanity Check",
+        "Quadrant/Edge Case Consideration",
+        "Formula Substitution / Plugging In"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 21850,
+      "timestamp": "2026-09-21T09:59:24.923Z"
+    },
+    {
+      "sample_id": 911,
+      "step_id": 132,
+      "taskA_step_type": "Final Conclusion / Boxed Answer",
+      "taskA_options_shown": [
+        "Meta-Cognition / Self-Talk",
+        "Context Repetition / Paraphrasing",
+        "Final Conclusion / Boxed Answer",
+        "Symbolic Transformation / Rewriting Sums"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 22152,
+      "timestamp": "2026-09-21T09:59:47.089Z"
+    },
+    {
+      "sample_id": 73,
+      "step_id": 73,
+      "taskA_step_type": "Heuristics / Intuition",
+      "taskA_options_shown": [
+        "Numerical Approximation / Interpretation",
+        "Verification / Sanity Check",
+        "Problem Re-statement / Setup",
+        "Heuristics / Intuition"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 20995,
+      "timestamp": "2026-09-21T10:00:08.089Z"
+    },
+    {
+      "sample_id": 261,
+      "step_id": 11,
+      "taskA_step_type": "Formula Substitution / Plugging In",
+      "taskA_options_shown": [
+        "Symbolic Transformation / Rewriting Sums",
+        "Other",
+        "Pattern Recognition / Symmetry",
+        "Formula Substitution / Plugging In"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 17851,
+      "timestamp": "2026-09-21T10:00:25.947Z"
+    },
+    {
+      "sample_id": 796,
+      "step_id": 364,
+      "taskA_step_type": "Heuristics / Intuition",
+      "taskA_options_shown": [
+        "Pattern Recognition / Symmetry",
+        "Heuristics / Intuition",
+        "Definition Recall",
+        "Symbolic Transformation / Rewriting Sums"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 9049,
+      "timestamp": "2026-09-21T10:00:35.005Z"
+    },
+    {
+      "sample_id": 383,
+      "step_id": 196,
+      "taskA_step_type": "Alternative Approach Exploration",
+      "taskA_options_shown": [
+        "Symbolic Transformation / Rewriting Sums",
+        "Context Repetition / Paraphrasing",
+        "Quadrant/Edge Case Consideration",
+        "Alternative Approach Exploration"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 6652,
+      "timestamp": "2026-09-21T10:00:41.659Z"
+    },
+    {
+      "sample_id": 402,
+      "step_id": 77,
+      "taskA_step_type": "Pattern Recognition / Symmetry",
+      "taskA_options_shown": [
+        "Alternative Approach Exploration",
+        "Pattern Recognition / Symmetry",
+        "Context Repetition / Paraphrasing",
+        "Final Conclusion / Boxed Answer"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 22960,
+      "timestamp": "2026-09-21T10:01:04.628Z"
+    },
+    {
+      "sample_id": 796,
+      "step_id": 200,
+      "taskA_step_type": "Heuristics / Intuition",
+      "taskA_options_shown": [
+        "Other",
+        "Heuristics / Intuition",
+        "Definition Recall",
+        "Context Repetition / Paraphrasing"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 17255,
+      "timestamp": "2026-09-21T10:01:21.892Z"
+    },
+    {
+      "sample_id": 650,
+      "step_id": 1,
+      "taskA_step_type": "Context Repetition / Paraphrasing",
+      "taskA_options_shown": [
+        "Symbolic Transformation / Rewriting Sums",
+        "Definition Recall",
+        "Context Repetition / Paraphrasing",
+        "Meta-Cognition / Self-Talk"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 36259,
+      "timestamp": "2026-09-21T10:01:58.161Z"
+    },
+    {
+      "sample_id": 805,
+      "step_id": 29,
+      "taskA_step_type": "Verification / Sanity Check",
+      "taskA_options_shown": [
+        "Verification / Sanity Check",
+        "Numerical Approximation / Interpretation",
+        "Other",
+        "Problem Re-statement / Setup"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 15108,
+      "timestamp": "2026-09-21T10:02:13.292Z"
+    },
+    {
+      "sample_id": 646,
+      "step_id": 147,
+      "taskA_step_type": "Heuristics / Intuition",
+      "taskA_options_shown": [
+        "Heuristics / Intuition",
+        "Problem Re-statement / Setup",
+        "Final Conclusion / Boxed Answer",
+        "Context Repetition / Paraphrasing"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 10963,
+      "timestamp": "2026-09-21T10:02:24.264Z"
+    },
+    {
+      "sample_id": 528,
+      "step_id": 4,
+      "taskA_step_type": "Meta-Cognition / Self-Talk",
+      "taskA_options_shown": [
+        "Meta-Cognition / Self-Talk",
+        "Numerical Approximation / Interpretation",
+        "Pattern Recognition / Symmetry",
+        "Alternative Approach Exploration"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 14375,
+      "timestamp": "2026-09-21T10:02:38.649Z"
+    },
+    {
+      "sample_id": 535,
+      "step_id": 1,
+      "taskA_step_type": "Context Repetition / Paraphrasing",
+      "taskA_options_shown": [
+        "Context Repetition / Paraphrasing",
+        "Meta-Cognition / Self-Talk",
+        "Other",
+        "Verification / Sanity Check"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 27997,
+      "timestamp": "2026-09-21T10:03:06.655Z"
+    },
+    {
+      "sample_id": 650,
+      "step_id": 12,
+      "taskA_step_type": "Problem Re-statement / Setup",
+      "taskA_options_shown": [
+        "Numerical Approximation / Interpretation",
+        "Other",
+        "Formula Substitution / Plugging In",
+        "Problem Re-statement / Setup"
+      ],
+      "taskB_role": "constructive",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 20279,
+      "timestamp": "2026-09-21T10:03:26.943Z"
+    },
+    {
+      "sample_id": 793,
+      "step_id": 35,
+      "taskA_step_type": "Alternative Approach Exploration",
+      "taskA_options_shown": [
+        "Heuristics / Intuition",
+        "Definition Recall",
+        "Meta-Cognition / Self-Talk",
+        "Alternative Approach Exploration"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 8392,
+      "timestamp": "2026-09-21T10:03:35.343Z"
+    },
+    {
+      "sample_id": 489,
+      "step_id": 66,
+      "taskA_step_type": "Meta-Cognition / Self-Talk",
+      "taskA_options_shown": [
+        "Definition Recall",
+        "Meta-Cognition / Self-Talk",
+        "Numerical Approximation / Interpretation",
+        "Pattern Recognition / Symmetry"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 6324,
+      "timestamp": "2026-09-21T10:03:41.676Z"
+    },
+    {
+      "sample_id": 978,
+      "step_id": 53,
+      "taskA_step_type": "Verification / Sanity Check",
+      "taskA_options_shown": [
+        "Other",
+        "Quadrant/Edge Case Consideration",
+        "Pattern Recognition / Symmetry",
+        "Verification / Sanity Check"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 6341,
+      "timestamp": "2026-09-21T10:03:48.026Z"
+    },
+    {
+      "sample_id": 834,
+      "step_id": 134,
+      "taskA_step_type": "Symbolic Transformation / Rewriting Sums",
+      "taskA_options_shown": [
+        "Heuristics / Intuition",
+        "Symbolic Transformation / Rewriting Sums",
+        "Quadrant/Edge Case Consideration",
+        "Verification / Sanity Check"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 19142,
+      "timestamp": "2026-09-21T10:04:07.176Z"
+    },
+    {
+      "sample_id": 807,
+      "step_id": 6,
+      "taskA_step_type": "Alternative Approach Exploration",
+      "taskA_options_shown": [
+        "Alternative Approach Exploration",
+        "Verification / Sanity Check",
+        "Definition Recall",
+        "Quadrant/Edge Case Consideration"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 9234,
+      "timestamp": "2026-09-21T10:04:16.426Z"
+    },
+    {
+      "sample_id": 314,
+      "step_id": 22,
+      "taskA_step_type": "Final Conclusion / Boxed Answer",
+      "taskA_options_shown": [
+        "Final Conclusion / Boxed Answer",
+        "Numerical Approximation / Interpretation",
+        "Context Repetition / Paraphrasing",
+        "Verification / Sanity Check"
+      ],
+      "taskB_role": "evaluative",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 9117,
+      "timestamp": "2026-09-21T10:04:25.558Z"
+    },
+    {
+      "sample_id": 314,
+      "step_id": 23,
+      "taskA_step_type": "Symbolic Transformation / Rewriting Sums",
+      "taskA_options_shown": [
+        "Meta-Cognition / Self-Talk",
+        "Symbolic Transformation / Rewriting Sums",
+        "Formula Substitution / Plugging In",
+        "Other"
+      ],
+      "taskB_role": "other",
+      "confirmed": true,
+      "viewed_context": false,
+      "notes": "",
+      "time_ms": 16568,
+      "timestamp": "2026-09-21T10:04:42.142Z"
+    }
+  ]
+}
