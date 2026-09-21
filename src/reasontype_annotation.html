@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReasonType Annotation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+/* MATH500 text uses $...$ and $$...$$ delimiters, so those must be enabled
+   (originally only \( \) and \[ \] were, so no math ever rendered).
+   processEscapes lets a literal dollar sign be written as \$. */
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<!-- tex-svg matches the `svg` config above (the original loaded tex-chtml, which ignored it) and needs no external math fonts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" id="mathjax-script" async></script>
+<style>
+  :root {
+    --bg: #F6F7F5;
+    --panel: #FFFFFF;
+    --ink: #1B1F23;
+    --muted: #5B6570;
+    --accent: #2A5C57;
+    --accent-ink: #FFFFFF;
+    --border: #DCE0DE;
+    --danger: #A23B3B;
+    --radio-ring: #2A5C57;
+    font-size: 16px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14181A; --panel: #1B2124; --ink: #EDEFEE; --muted: #9AA5A8;
+      --accent: #6BC7B5; --accent-ink: #0E1413; --border: #2A3236; --danger: #E08585; --radio-ring: #6BC7B5;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14181A; --panel: #1B2124; --ink: #EDEFEE; --muted: #9AA5A8;
+    --accent: #6BC7B5; --accent-ink: #0E1413; --border: #2A3236; --danger: #E08585; --radio-ring: #6BC7B5;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif; line-height: 1.5;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 20px 18px 80px; }
+
+  .topbar {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap; padding-bottom: 14px; margin-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar h1 { font-size: 1.05rem; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  .topbar .sub { color: var(--muted); font-size: 0.85rem; }
+  .topbar .sub a { color: var(--accent); }
+  .topbar .actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .linklike {
+    background: none; border: none; color: var(--muted); font-size: 0.8rem;
+    text-decoration: underline; text-underline-offset: 2px; cursor: pointer; padding: 0; font-family: inherit;
+  }
+  .linklike:hover { color: var(--ink); }
+
+  .progress-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 10px; }
+  .progress-fill { height: 100%; background: var(--accent); transition: width .25s ease; }
+
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 22px 22px 24px; }
+  .card + .card { margin-top: 16px; }
+  .card h2.card-title { font-size: 1rem; font-weight: 600; margin: 0 0 10px; }
+  .card p { margin: 0 0 10px; font-size: 0.92rem; color: var(--ink); }
+  .card p.muted { color: var(--muted); font-size: 0.85rem; }
+
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 6px; }
+  .field .hint { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+  input[type=text] {
+    width: 100%; padding: 9px 10px; font-size: 0.95rem; font-family: inherit;
+    border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--ink);
+  }
+  input[type=file] { font-size: 0.85rem; color: var(--muted); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent); color: var(--accent-ink); border: none;
+    padding: 10px 18px; border-radius: 7px; font-size: 0.9rem; font-weight: 500;
+    cursor: pointer; font-family: inherit;
+  }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn.secondary { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+  .btn:focus-visible, .linklike:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--radio-ring); outline-offset: 2px;
+  }
+  .notice {
+    font-size: 0.82rem; padding: 10px 12px; border-radius: 6px; margin-bottom: 16px;
+    background: color-mix(in srgb, var(--accent) 12%, var(--panel)); border: 1px solid var(--border); color: var(--ink);
+  }
+  .notice.warn { border-color: var(--danger); }
+
+  .task-pair { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; margin: 10px 0 4px; }
+  .task-pair .task-box { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; background: var(--bg); }
+  .task-pair .task-box h3 { margin: 0 0 4px; font-size: 0.85rem; }
+  .task-pair .task-box p { margin: 0; font-size: 0.82rem; color: var(--muted); }
+  @media (max-width: 560px) { .task-pair { grid-template-columns: 1fr; } }
+
+  details.glossary { margin-top: 6px; }
+  details.glossary summary { cursor: pointer; font-size: 0.88rem; color: var(--accent); padding: 6px 0; font-weight: 500; }
+  .phase-group { margin: 12px 0; }
+  .phase-group .phase-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .gloss-item { padding: 6px 0; border-top: 1px solid var(--border); font-size: 0.85rem; }
+  .phase-group .gloss-item:first-of-type { border-top: none; }
+  .gloss-item .g-name { font-weight: 500; }
+  .gloss-item .g-desc { color: var(--muted); }
+
+  .block { margin-bottom: 18px; }
+  .block h2 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; margin: 0 0 8px; }
+  .problem-text, .step-text { font-family: "IBM Plex Serif", Georgia, serif; font-size: 1rem; white-space: pre-wrap; line-height: 1.6; }
+  .problem-box { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .step-box { background: var(--bg); border: 1.5px solid var(--accent); border-radius: 8px; padding: 16px 18px; }
+  details.context { margin-top: 8px; font-size: 0.85rem; }
+  details.context summary { cursor: pointer; color: var(--muted); font-size: 0.8rem; padding: 4px 0; }
+  .context-list { margin: 8px 0 0; padding-left: 0; list-style: none; }
+  .context-list li { padding: 8px 0; border-top: 1px solid var(--border); font-family: "IBM Plex Serif", serif; white-space: pre-wrap; font-size: 0.92rem; color: var(--muted); }
+  .context-list li .n { color: var(--ink); font-weight: 500; margin-right: 6px; font-family: inherit; }
+
+  /* long formulas scroll inside their own box instead of widening the page */
+  .problem-text mjx-container, .step-text mjx-container, .context-list mjx-container { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+
+  .confirm-row {
+    display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px;
+    background: var(--bg); border: 1px dashed var(--border); border-radius: 8px; margin: 18px 0;
+  }
+  .confirm-row input { margin-top: 3px; }
+  .confirm-row label { font-size: 0.9rem; cursor: pointer; }
+
+  fieldset { border: none; padding: 0; margin: 0; }
+  .options { display: grid; gap: 8px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 10px; border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 12px; cursor: pointer; background: var(--panel);
+  }
+  .opt:hover { border-color: var(--accent); }
+  .opt input { margin-top: 3px; accent-color: var(--accent); }
+  .opt .opt-name { font-weight: 500; font-size: 0.92rem; }
+  .opt .opt-desc { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+  .opt.checked { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--panel)); }
+
+  textarea {
+    width: 100%; font-family: inherit; font-size: 0.88rem; padding: 8px 10px;
+    border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--ink); resize: vertical; min-height: 50px;
+  }
+
+  .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .nav-row .spacer { flex: 1; }
+
+  .finish-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+  .stat { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+  .stat .num { font-size: 1.3rem; font-weight: 600; }
+  .stat .lbl { font-size: 0.75rem; color: var(--muted); }
+
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: flex-start;
+    justify-content: center; padding: 40px 16px; overflow-y: auto; z-index: 50;
+  }
+  .modal-box { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 22px; max-width: 640px; width: 100%; }
+  .modal-box .modal-close-row { display:flex; justify-content: flex-end; margin-top: 14px; }
+
+  .hidden { display: none !important; }
+  @media (max-width: 480px) { .finish-stats { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div>
+      <h1>ReasonType step annotation</h1>
+      <div class="sub" id="topSub">Human validation of the ReasonType taxonomy (<a href="https://openreview.net/forum?id=n9iNwebw8Q" target="_blank" rel="noopener">TRACES paper</a>)</div>
+    </div>
+    <div class="actions">
+      <button class="linklike hidden" id="glossaryLinkBtn">Taxonomy reference</button>
+      <button class="linklike hidden" id="saveProgressBtn">Save progress file</button>
+    </div>
+  </div>
+  <div class="progress-track hidden" id="progressTrack"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+  <!-- SETUP SCREEN -->
+  <div id="setupScreen">
+
+    <div class="card">
+      <h2 class="card-title">What this is</h2>
+      <p>This is a human-validation experiment for the <strong>ReasonType</strong> taxonomy used in the TRACES project. Each item is one reasoning step from a DeepSeek-14B trace on a MATH500 problem, previously labelled by GPT-4o-mini. Your task is to label the same steps <em>blind</em> (you won't see GPT-4o-mini's label) so we can measure:</p>
+      <ol style="margin:0 0 10px; padding-left:20px; font-size:0.92rem;">
+        <li>how consistent human annotators are with each other, and</li>
+        <li>how well GPT-4o-mini's labels line up with human judgement.</li>
+      </ol>
+      <p class="muted">You'll only be shown the problem and the single step to classify, which is the same information GPT-4o-mini had. Earlier steps in the trace are not available.</p>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">The two tasks, per step</h2>
+      <div class="task-pair">
+        <div class="task-box">
+          <h3>Task A — Step-type</h3>
+          <p>Pick the one correct step-type out of 4 options (1 correct + 3 incorrect, drawn from the full 14-class taxonomy).</p>
+        </div>
+        <div class="task-box">
+          <h3>Task B — Overall role</h3>
+          <p>Say whether the step plays a <strong>Constructive</strong>, <strong>Evaluative</strong>, or <strong>Other</strong> role in the solution.</p>
+        </div>
+      </div>
+      <p class="muted">The two tasks are answered separately — your Task B answer never restricts which Task A options you see, and vice versa.</p>
+
+      <details class="glossary" id="glossaryDetails">
+        <summary>Task A glossary: the 14 step-types, grouped by where they typically occur</summary>
+        <div id="glossaryBody"></div>
+      </details>
+      <details class="glossary" id="roleGlossaryDetails">
+        <summary>Task B glossary: the 3 overall roles</summary>
+        <div id="roleGlossaryBody"></div>
+      </details>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Session setup</h2>
+
+      <div class="field">
+        <label for="annotatorId">Your name or ID</label>
+        <input type="text" id="annotatorId" placeholder="e.g. yannis">
+        <div class="hint">Used to label your export file and to save your progress locally in this browser.</div>
+      </div>
+
+      <div class="field">
+        <label for="dataFile">Annotation data file <span style="color:var(--danger)">(required)</span></label>
+        <input type="file" id="dataFile" accept=".json,.jsonl,.csv,.tsv,application/json,text/csv,text/tab-separated-values">
+        <div class="hint">
+          Accepted formats:
+          <br>&bull; <strong>CSV / TSV</strong> (e.g. a DataFrame exported with <code>to_csv</code>) with columns <code>sample_id</code>, <code>step_id</code>, <code>step</code>, <code>category</code>, and optionally <code>problems</code> (or <code>problem</code>). Extra columns such as <code>level</code> and an unnamed index column are ignored.
+          <br>&bull; <strong>JSON</strong> array of the same records (e.g. <code>df.to_dict("records")</code>), or JSON Lines.
+          <br>&bull; <strong>JSON</strong> object <code>{"steps": [...], "problems": {...}, "full_trace": [...]}</code>. Here <code>problems</code> is either <code>{"0": "text", ...}</code> keyed by sample_id or a list of <code>{"sample_id":0,"problem":"..."}</code>; <code>full_trace</code> has the same shape as <code>steps</code> but covers every step, and powers the "show previous steps" toggle.
+          <br>The problem text can come from a separate <code>problems</code> block <em>or</em> from a <code>problems</code>/<code>problem</code> field on each step record.
+        </div>
+      </div>
+
+      <div class="field">
+        <label style="display:flex; align-items:center; gap:8px; font-weight:400;">
+          <input type="checkbox" id="shuffleCheck" checked>
+          Shuffle item order for this session
+        </label>
+      </div>
+
+      <div id="setupNotice"></div>
+      <button class="btn" id="startBtn" disabled>Start annotating</button>
+      <button class="btn secondary hidden" id="resumeBtn">Resume saved session</button>
+    </div>
+  </div>
+
+  <!-- ANNOTATION SCREEN -->
+  <div class="card hidden" id="annoScreen">
+
+    <div class="block hidden" id="problemBlock">
+      <h2>Problem</h2>
+      <div class="problem-box"><div class="problem-text" id="problemText"></div></div>
+    </div>
+    <div class="notice hidden" id="noProblemNotice">No problem text loaded for this item — step shown without surrounding context.</div>
+
+    <div class="block">
+      <h2>Step to annotate</h2>
+      <div class="step-box"><div class="step-text" id="stepText"></div></div>
+      <details class="context" id="contextDetails">
+        <summary>Show previous steps in this trace (not shown to GPT-4o-mini — use only if the step is unclear alone)</summary>
+        <ul class="context-list" id="contextList"></ul>
+      </details>
+    </div>
+
+    <div class="confirm-row">
+      <input type="checkbox" id="confirmCheck">
+      <label for="confirmCheck">I've read the problem and this step carefully.</label>
+    </div>
+
+    <div class="notice hidden" id="unknownCategoryNotice"></div>
+
+    <div class="block">
+      <h2>Task A — Step-type (choose 1 of 4)</h2>
+      <fieldset id="taskAFieldset"><div class="options" id="taskAOptions"></div></fieldset>
+    </div>
+
+    <div class="block">
+      <h2>Task B — Overall role of the step</h2>
+      <fieldset id="taskBFieldset"><div class="options" id="taskBOptions"></div></fieldset>
+    </div>
+
+    <div class="field">
+      <label for="notesField">Notes (optional — flag anything ambiguous)</label>
+      <textarea id="notesField" placeholder="Optional"></textarea>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn secondary" id="prevBtn">&larr; Previous</button>
+      <div class="spacer"></div>
+      <button class="btn" id="nextBtn" disabled>Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- FINISH SCREEN -->
+  <div class="card hidden" id="finishScreen">
+    <h2 style="font-size:1.1rem; margin-top:0;">All items annotated — thank you.</h2>
+    <div class="finish-stats" id="finishStats"></div>
+    <button class="btn" id="downloadBtn">Download annotations (.json)</button>
+    <button class="btn secondary" id="restartBtn">Start a new session</button>
+  </div>
+
+</div>
+
+<div class="modal-overlay hidden" id="glossaryModalOverlay">
+  <div class="modal-box">
+    <h2 class="card-title">Reference</h2>
+    <div id="glossaryModalBody"></div>
+    <div class="modal-close-row"><button class="btn secondary" id="glossaryModalCloseBtn">Close</button></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   FULL 14-CLASS TAXONOMY.
+   `phase` groups classes for display/reading only — it does not gate any
+   answer choice.
+   `macro` is the Task B role each step-type belongs to:
+     constructive = Problem Re-statement / Setup, Definition Recall
+     evaluative   = Verification / Sanity Check, Final Conclusion / Boxed Answer
+     other        = every remaining step-type
+   Task A and Task B are answered independently by annotators.
+   Classes flagged isNew had their short definitions written from the
+   ReasonType diagram (not the source PDF) — please check them against yours.
+   ========================================================================= */
+const PHASES = [
+  { id: 'setup', label: 'Early reasoning (Setup)' },
+  { id: 'mid',   label: 'Mid-reasoning (Calculus and problem solving)' },
+  { id: 'late',  label: 'Late-reasoning (Analysis and reflection)' },
+  { id: 'end',   label: 'End-reasoning (Conclusion)' }
+];
+
+const MACRO = [
+  { id: 'constructive', label: 'Constructive',
+    desc: 'Grounds the reasoning in the given problem by restating the setup or recalling a definition. Involves no computation and no self-reflection.' },
+  { id: 'evaluative',   label: 'Evaluative',
+    desc: 'Assesses the validity of a previous step or of the overall approach, or states the final answer.' },
+  { id: 'other',        label: 'Other',
+    desc: 'Does not fit Constructive or Evaluative (e.g. computing, rewriting, case analysis, exploring alternatives, self-talk).' }
+];
+
+const TAXONOMY = [
+  { name: 'Problem Re-statement / Setup',              phase: 'setup', macro: 'constructive', desc: 'Restates or rephrases the problem/question without adding new content.', isNew: true },
+  { name: 'Context Repetition / Paraphrasing',         phase: 'setup', macro: 'other',        desc: 'Repeats given information or prior results without transforming them.', isNew: true },
+  { name: 'Definition Recall',                         phase: 'setup', macro: 'constructive', desc: 'Recalls a definition, theorem, or known fact relevant to the problem.' },
+  { name: 'Formula Substitution / Plugging In',        phase: 'mid',   macro: 'other',        desc: 'Substitutes values into a formula or expression.' },
+  { name: 'Symbolic Transformation / Rewriting Sums',  phase: 'mid',   macro: 'other',        desc: 'Algebraically rewrites or simplifies an expression.' },
+  { name: 'Quadrant/Edge Case Consideration',          phase: 'mid',   macro: 'other',        desc: 'Considers a specific case, region, sign, or edge condition.' },
+  { name: 'Pattern Recognition / Symmetry',            phase: 'mid',   macro: 'other',        desc: 'Notices a pattern, regularity, or symmetry that guides the solution.', isNew: true },
+  { name: 'Verification / Sanity Check',               phase: 'late',  macro: 'evaluative',   desc: 'Checks a prior result for correctness or consistency.' },
+  { name: 'Heuristics / Intuition',                    phase: 'late',  macro: 'other',        desc: 'Uses an informal heuristic or intuition to pick an approach.' },
+  { name: 'Alternative Approach Exploration',          phase: 'late',  macro: 'other',        desc: 'Tries a different method or explores another path to the solution.', isNew: true },
+  { name: 'Numerical Approximation / Interpretation',  phase: 'late',  macro: 'other',        desc: 'Approximates a quantity numerically, or interprets what a computed result means in context.', isNew: true },
+  { name: 'Meta-Cognition / Self-Talk',                phase: 'late',  macro: 'other',        desc: 'Reflects on its own reasoning process ("wait", "let me reconsider").' },
+  { name: 'Final Conclusion / Boxed Answer',           phase: 'end',   macro: 'evaluative',   desc: 'States the final answer.' },
+  { name: 'Other',                                     phase: 'end',   macro: 'other',        desc: 'Doesn\'t fit any other category.', isNew: true }
+];
+const TAXONOMY_BY_NAME = {};
+TAXONOMY.forEach(t => TAXONOMY_BY_NAME[t.name] = t);
+
+// Loose lookup so a source label like "definition recall" or "Definition_Recall"
+// still matches "Definition Recall" instead of being treated as an unknown class.
+function normName(s){
+  return String(s ?? '').trim().toLowerCase().replace(/[_\-]+/g, ' ').replace(/\s+/g, ' ');
+}
+const TAXONOMY_BY_NORM = {};
+TAXONOMY.forEach(t => TAXONOMY_BY_NORM[normName(t.name)] = t);
+function resolveTaxonomy(rawName){
+  return TAXONOMY_BY_NORM[normName(rawName)] || null;
+}
+
+/* ---------------------------------------------------------------------- */
+
+let state = {
+  annotatorId: '',
+  items: [],             // [{sample_id, step_id, step, category, ...}]
+  problems: {},          // sample_id -> text
+  fullIndex: {},         // sample_id -> [{step_id, step}] sorted asc
+  responses: {},         // key -> {taskA_step_type, taskB_role, notes, viewed_context, confirmed, time_ms, timestamp, ...}
+  itemOptions: {},       // key -> [name, name, name, name] (cached Task A option set)
+  order: [],             // array of indices into items, defines display order
+  pos: 0,
+  itemStartTs: null
+};
+
+const $ = (id) => document.getElementById(id);
+const keyFor = (it) => `${it.sample_id}__${it.step_id}`;
+const storageKey = () => `traces_annot_progress_${state.annotatorId.replace(/[^a-z0-9_-]/gi,'_')}`;
+
+function escapeHtml(s){
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdLite(s){
+  return escapeHtml(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+// Re-typeset an element after its contents were replaced. MathJax loads async,
+// so retry briefly if it isn't ready yet; clear stale math items to avoid leaks.
+function typeset(el, tries = 0){
+  const mj = window.MathJax;
+  if (mj && mj.typesetPromise) {
+    try { if (mj.typesetClear) mj.typesetClear([el]); } catch(e){}
+    mj.typesetPromise([el]).catch(()=>{});
+  } else if (tries < 20) {
+    setTimeout(() => typeset(el, tries + 1), 250);
+  }
+}
+
+function readFileAsText(file){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = () => rej(new Error('Could not read file'));
+    r.readAsText(file);
+  });
+}
+
+/* ---------------- data-file parsing (JSON / JSONL / CSV / TSV) ---------------- */
+
+// Minimal RFC-4180-style parser: handles quoted fields, escaped quotes ("")
+// and newlines inside quoted fields (reasoning steps are multi-line).
+function parseDelimited(text, delim){
+  const rows = [];
+  let row = [], field = '', inQ = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQ) {
+      if (c === '"') {
+        if (text[i + 1] === '"') { field += '"'; i++; } else inQ = false;
+      } else field += c;
+    } else if (c === '"' && field === '') {
+      inQ = true;
+    } else if (c === delim) {
+      row.push(field); field = '';
+    } else if (c === '\n' || c === '\r') {
+      if (c === '\r' && text[i + 1] === '\n') i++;
+      row.push(field); field = ''; rows.push(row); row = [];
+    } else field += c;
+  }
+  if (field !== '' || row.length) { row.push(field); rows.push(row); }
+  return rows.filter(r => !(r.length === 1 && r[0].trim() === ''));
+}
+
+function rowsToRecords(rows){
+  if (rows.length < 2) throw new Error('The table needs a header row and at least one data row.');
+  const names = rows[0].map(h => h.trim().toLowerCase().replace(/\s+/g, '_'));
+  const skip = new Set(['', 'index', 'unnamed:_0']);
+  return rows.slice(1).map(cells => {
+    // A pandas-style dump can have an unlabeled index column, which makes each
+    // row one cell longer than the header. Detect that and shift over it.
+    const offset = cells.length === names.length + 1 ? 1 : 0;
+    const rec = {};
+    names.forEach((n, j) => { if (!skip.has(n)) rec[n] = cells[j + offset]; });
+    return rec;
+  });
+}
+
+function toNum(v){
+  if (typeof v === 'number') return v;
+  if (typeof v === 'string' && v.trim() !== '' && Number.isFinite(Number(v))) return Number(v);
+  return v;
+}
+
+// Bring a step record into the shape the app uses. IDs become numbers (so
+// "9" < "18" compares correctly), and an inline problem/problems field is
+// normalised to `problem`.
+function normalizeStepRecord(r){
+  if (!r || typeof r !== 'object') return r;
+  const out = Object.assign({}, r);
+  out.sample_id = toNum(r.sample_id);
+  out.step_id = toNum(r.step_id);
+  if (typeof out.category === 'string') out.category = out.category.trim();
+  const inline = r.problem ?? r.problems ?? r.problem_text;
+  if (inline !== undefined && inline !== null && String(inline).trim() !== '') out.problem = String(inline);
+  return out;
+}
+
+async function parseDataFile(file){
+  const text = (await readFileAsText(file)).replace(/^\uFEFF/, '');
+  const trimmed = text.trim();
+  if (!trimmed) throw new Error('The file is empty.');
+
+  // JSON or JSON Lines
+  if (trimmed[0] === '[' || trimmed[0] === '{') {
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed)) return { stepsRaw: parsed };
+      if (parsed && typeof parsed === 'object') {
+        return {
+          stepsRaw: parsed.steps,
+          problemsRaw: parsed.problems,
+          fullRaw: parsed.full_trace ?? parsed.fullTrace ?? parsed.full
+        };
+      }
+    } catch (e) {
+      const lines = trimmed.split(/\r?\n/).filter(l => l.trim());
+      try { return { stepsRaw: lines.map(l => JSON.parse(l)) }; }
+      catch (e2) { throw new Error('Not valid JSON or JSON Lines: ' + e.message); }
+    }
+  }
+
+  // CSV / TSV
+  const name = file.name.toLowerCase();
+  const firstLine = trimmed.split(/\r?\n/, 1)[0];
+  let delim = ',';
+  if (name.endsWith('.tsv')) delim = '\t';
+  else if (name.endsWith('.csv')) delim = ',';
+  else if ((firstLine.match(/\t/g) || []).length > (firstLine.match(/,/g) || []).length) delim = '\t';
+  return { stepsRaw: rowsToRecords(parseDelimited(text, delim)) };
+}
+
+/* ---------------- glossary rendering (shared by setup card + modal) ---------------- */
+
+function renderGlossary(){
+  return PHASES.map(p => {
+    const items = TAXONOMY.filter(t => t.phase === p.id);
+    if (!items.length) return '';
+    return `<div class="phase-group">
+      <div class="phase-title">${escapeHtml(p.label)}</div>
+      ${items.map(t => `<div class="gloss-item"><span class="g-name">${escapeHtml(t.name)}</span> — <span class="g-desc">${escapeHtml(t.desc)}</span></div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+function renderRoleGlossary(){
+  return MACRO.map(m => {
+    const members = TAXONOMY.filter(t => t.macro === m.id);
+    const includes = m.id === 'other'
+      ? `Any step that is neither Constructive nor Evaluative, i.e. the remaining ${members.length} step-types.`
+      : `Made up exclusively of: ${members.map(t => escapeHtml(t.name)).join(' and ')}.`;
+    return `<div class="phase-group">
+      <div class="phase-title">${escapeHtml(m.label)}</div>
+      <div class="gloss-item"><span class="g-desc">${escapeHtml(m.desc)}</span></div>
+      <div class="gloss-item"><span class="g-desc">${includes}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function renderFullReference(){
+  return `<h3 style="font-size:0.9rem; margin:0 0 4px;">Task A — step-types</h3>${renderGlossary()}
+    <h3 style="font-size:0.9rem; margin:18px 0 4px;">Task B — overall roles</h3>${renderRoleGlossary()}`;
+}
+
+/* ---------------- setup screen wiring ---------------- */
+
+let loadedSteps = null, loadedProblems = null, loadedFull = null;
+
+function setNotice(msg, warn){
+  const el = $('setupNotice');
+  if (!el) return;
+  if (!msg){ el.innerHTML = ''; return; }
+  el.innerHTML = `<div class="notice ${warn?'warn':''}">${escapeHtml(msg)}</div>`;
+}
+function refreshStartEnabled(){
+  const idOk = $('annotatorId').value.trim().length > 0;
+  $('startBtn').disabled = !(idOk && loadedSteps && loadedSteps.length);
+}
+
+function checkUnknownCategories(items){
+  const unknown = new Set();
+  items.forEach(it => { if (it && it.category && !resolveTaxonomy(it.category)) unknown.add(it.category); });
+  return Array.from(unknown);
+}
+
+// Canonicalize each item's category to the exact taxonomy name whenever it
+// matches loosely (case/underscore/whitespace differences), so downstream
+// exact-match lookups (option descriptions, agreement stats) work correctly.
+// Categories that genuinely aren't in the 14-class list are left untouched.
+function canonicalizeCategories(items){
+  items.forEach(it => {
+    if (!it || !it.category) return;
+    const match = resolveTaxonomy(it.category);
+    if (match) it.category = match.name;
+  });
+}
+
+function initSetupScreen(){
+  $('glossaryBody').innerHTML = renderGlossary();
+  $('roleGlossaryBody').innerHTML = renderRoleGlossary();
+
+  $('annotatorId').addEventListener('input', () => {
+    refreshStartEnabled();
+    checkForSavedSession();
+  });
+
+  $('dataFile').addEventListener('change', async (e) => {
+    const f = e.target.files[0];
+    if (!f) return;
+    loadedSteps = null; loadedProblems = null; loadedFull = null;
+    try {
+      const { stepsRaw: rawSteps, problemsRaw, fullRaw } = await parseDataFile(f);
+
+      if (!Array.isArray(rawSteps) || !rawSteps.length) {
+        throw new Error('Expected a "steps" array, a bare JSON array, or a CSV/TSV table of step records.');
+      }
+      const stepsRaw = rawSteps.map(normalizeStepRecord);
+      const bad = stepsRaw.findIndex(r => !r || r.sample_id === undefined || r.step_id === undefined || r.step === undefined || r.step === null);
+      if (bad !== -1) {
+        throw new Error(`Row ${bad + 1} is missing sample_id, step_id or step. Found fields: ${Object.keys(rawSteps[bad] || {}).join(', ') || '(none)'}.`);
+      }
+      const noCat = stepsRaw.filter(r => !r.category).length;
+      if (noCat) throw new Error(`${noCat} row(s) have no "category" value — it is needed as the correct Task A option.`);
+
+      canonicalizeCategories(stepsRaw);
+      loadedSteps = stepsRaw;
+
+      // Problem text: explicit "problems" block first, then fill gaps from
+      // the per-row problem/problems field.
+      const map = {};
+      if (problemsRaw) {
+        if (Array.isArray(problemsRaw)) {
+          problemsRaw.forEach(r => { if (r && r.sample_id !== undefined) map[String(toNum(r.sample_id))] = r.problem ?? r.problems ?? r.text ?? ''; });
+        } else if (typeof problemsRaw === 'object') {
+          Object.keys(problemsRaw).forEach(k => map[String(toNum(k))] = problemsRaw[k]);
+        }
+      }
+      stepsRaw.forEach(r => {
+        const k = String(r.sample_id);
+        if (r.problem && !map[k]) map[k] = r.problem;
+      });
+      loadedProblems = map;
+      const problemCount = Object.keys(map).filter(k => map[k]).length;
+
+      let fullSampleCount = 0;
+      if (fullRaw) {
+        if (!Array.isArray(fullRaw)) throw new Error('"full_trace" must be a JSON array.');
+        const idx = {};
+        fullRaw.forEach(r => {
+          if (!r || r.sample_id === undefined) return;
+          const sid = String(toNum(r.sample_id));
+          (idx[sid] = idx[sid] || []).push({ step_id: toNum(r.step_id), step: r.step });
+        });
+        Object.values(idx).forEach(arr => arr.sort((a,b)=>a.step_id - b.step_id));
+        loadedFull = idx;
+        fullSampleCount = Object.keys(idx).length;
+      }
+
+      const parts = [`${stepsRaw.length} step(s)`];
+      if (problemCount) parts.push(`${problemCount} problem statement(s)`);
+      if (fullSampleCount) parts.push(`context for ${fullSampleCount} sample(s)`);
+
+      const unknown = checkUnknownCategories(stepsRaw);
+      if (unknown.length) {
+        setNotice(`Loaded ${parts.join(', ')}. Note: ${unknown.length} category value(s) don't match the built-in 14-class glossary even after ignoring case/spacing (${unknown.slice(0,5).join(', ')}${unknown.length>5?', …':''}) — they'll still work as the "correct" Task A option, just without a description shown.`, true);
+      } else {
+        setNotice(`Loaded ${parts.join(', ')}.`);
+      }
+    } catch(err){
+      loadedSteps = null; loadedProblems = null; loadedFull = null;
+      setNotice('Could not read data file: ' + err.message, true);
+      console.error('dataFile load error:', err);
+    }
+    refreshStartEnabled();
+  });
+
+  function checkForSavedSession(){
+    const id = $('annotatorId').value.trim();
+    $('resumeBtn').classList.add('hidden');
+    if (!id) return;
+    try {
+      const raw = localStorage.getItem(`traces_annot_progress_${id.replace(/[^a-z0-9_-]/gi,'_')}`);
+      if (raw) {
+        const saved = JSON.parse(raw);
+        if (saved && saved.responses && Object.keys(saved.responses).length) {
+          $('resumeBtn').classList.remove('hidden');
+        }
+      }
+    } catch(e){ /* ignore */ }
+  }
+
+  $('resumeBtn').addEventListener('click', () => {
+    if (!loadedSteps || !loadedSteps.length) {
+      setNotice('Load the same data file first, then resume.', true);
+      return;
+    }
+    beginSession(true);
+  });
+
+  $('startBtn').addEventListener('click', () => beginSession(false));
+
+  $('glossaryLinkBtn').addEventListener('click', () => {
+    $('glossaryModalBody').innerHTML = renderFullReference();
+    $('glossaryModalOverlay').classList.remove('hidden');
+  });
+  $('glossaryModalCloseBtn').addEventListener('click', () => $('glossaryModalOverlay').classList.add('hidden'));
+  $('glossaryModalOverlay').addEventListener('click', (e) => { if (e.target.id === 'glossaryModalOverlay') $('glossaryModalOverlay').classList.add('hidden'); });
+}
+
+function beginSession(resume){
+  state.annotatorId = $('annotatorId').value.trim();
+  state.items = loadedSteps;
+  state.problems = loadedProblems || {};
+  state.fullIndex = loadedFull || {};
+  state.responses = {};
+  state.itemOptions = {};
+  state.pos = 0;
+
+  let order = state.items.map((_, i) => i);
+  if (resume) {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey()));
+      if (saved && saved.responses) state.responses = saved.responses;
+      if (saved && saved.itemOptions) state.itemOptions = saved.itemOptions;
+      if (saved && Array.isArray(saved.order) && saved.order.length === order.length) order = saved.order;
+    } catch(e){ console.error('resume parse error:', e); }
+  } else if ($('shuffleCheck').checked) {
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+  }
+  state.order = order;
+
+  if (resume) {
+    let firstUnanswered = order.findIndex(i => !state.responses[keyFor(state.items[i])]);
+    state.pos = firstUnanswered === -1 ? order.length - 1 : firstUnanswered;
+  }
+
+  buildTaskBOptionsUI();
+  $('setupScreen').classList.add('hidden');
+  $('annoScreen').classList.remove('hidden');
+  $('finishScreen').classList.add('hidden');
+  $('progressTrack').classList.remove('hidden');
+  $('saveProgressBtn').classList.remove('hidden');
+  $('glossaryLinkBtn').classList.remove('hidden');
+  renderItem();
+}
+
+/* ---------------- Task B option UI (static, rebuilt each session) ---------------- */
+
+function buildTaskBOptionsUI(){
+  const wrap = $('taskBOptions');
+  wrap.innerHTML = '';
+  MACRO.forEach(m => {
+    const div = document.createElement('label');
+    div.className = 'opt';
+    div.innerHTML = `<input type="radio" name="taskB" value="${escapeHtml(m.id)}">
+      <div><div class="opt-name">${escapeHtml(m.label)}</div><div class="opt-desc">${escapeHtml(m.desc)}</div></div>`;
+    wrap.appendChild(div);
+  });
+  // (change listeners for both tasks are attached once in initNav)
+}
+
+/* ---------------- Task A option generation (per item, cached) ---------------- */
+
+function shuffle(arr){
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function getTaskAOptions(item){
+  const key = keyFor(item);
+  if (state.itemOptions[key]) return state.itemOptions[key];
+
+  const correct = item.category;
+  const allNames = TAXONOMY.map(t => t.name);
+  const pool = allNames.filter(n => n !== correct);
+  const distractors = shuffle(pool).slice(0, 3);
+  const options = shuffle([correct, ...distractors]);
+  state.itemOptions[key] = options;
+  return options;
+}
+
+function buildTaskAOptionsUI(item, existing){
+  const wrap = $('taskAOptions');
+  wrap.innerHTML = '';
+  const options = getTaskAOptions(item);
+
+  const unknownNotice = $('unknownCategoryNotice');
+  if (!TAXONOMY_BY_NAME[item.category]) {
+    unknownNotice.classList.remove('hidden');
+    unknownNotice.textContent = `Heads up: this item's source label ("${item.category}") isn't in the built-in glossary — it is still included as one of the 4 options below.`;
+  } else {
+    unknownNotice.classList.add('hidden');
+  }
+
+  options.forEach(name => {
+    const def = TAXONOMY_BY_NAME[name];
+    const div = document.createElement('label');
+    div.className = 'opt';
+    div.innerHTML = `<input type="radio" name="taskA" value="${escapeHtml(name)}">
+      <div><div class="opt-name">${escapeHtml(name)}</div><div class="opt-desc">${escapeHtml(def ? def.desc : '')}</div></div>`;
+    wrap.appendChild(div);
+  });
+
+  // saved responses store the answer under taskA_step_type (was wrongly read from .taskA)
+  const saved = existing ? existing.taskA_step_type : null;
+  document.querySelectorAll('input[name=taskA]').forEach(r => { r.checked = !!saved && r.value === saved; });
+  updateCheckedStyles();
+}
+
+function updateCheckedStyles(){
+  document.querySelectorAll('.opt').forEach(o => {
+    const input = o.querySelector('input');
+    o.classList.toggle('checked', !!input && input.checked);
+  });
+}
+
+/* ---------------- rendering an item ---------------- */
+
+function renderItem(){
+  const item = state.items[state.order[state.pos]];
+  const existing = state.responses[keyFor(item)] || null;
+
+  $('topSub').textContent = `Item ${state.pos + 1} of ${state.order.length} — ${state.annotatorId}`;
+  $('progressFill').style.width = `${(state.pos / state.order.length) * 100}%`;
+
+  const problemText = state.problems[String(item.sample_id)];
+  if (problemText) {
+    $('problemBlock').classList.remove('hidden');
+    $('noProblemNotice').classList.add('hidden');
+    $('problemText').innerHTML = mdLite(problemText);
+    typeset($('problemText'));
+  } else {
+    $('problemBlock').classList.add('hidden');
+    $('noProblemNotice').classList.remove('hidden');
+  }
+
+  $('stepText').innerHTML = mdLite(item.step);
+  typeset($('stepText'));
+
+  const prior = (state.fullIndex[String(item.sample_id)] || []).filter(s => s.step_id < item.step_id);
+  const details = $('contextDetails');
+  if (prior.length) {
+    details.classList.remove('hidden');
+    const list = $('contextList');
+    list.innerHTML = prior.map(s => `<li><span class="n">Step ${s.step_id}:</span>${mdLite(s.step)}</li>`).join('');
+    typeset(list);
+  } else {
+    details.classList.add('hidden');
+  }
+  details.open = false;
+  details.dataset.viewed = existing && existing.viewed_context ? '1' : '0';
+  details.ontoggle = () => { if (details.open) details.dataset.viewed = '1'; };
+
+  $('confirmCheck').checked = !!(existing && existing.confirmed);
+  buildTaskAOptionsUI(item, existing);
+  // saved responses store the answer under taskB_role (was wrongly read from .taskB)
+  const savedB = existing ? existing.taskB_role : null;
+  document.querySelectorAll('input[name=taskB]').forEach(r => { r.checked = !!savedB && r.value === savedB; });
+  $('notesField').value = existing ? (existing.notes || '') : '';
+  updateCheckedStyles();
+
+  $('prevBtn').disabled = state.pos === 0;
+  $('nextBtn').textContent = state.pos === state.order.length - 1 ? 'Finish' : 'Next \u2192';
+  refreshNextEnabled();
+
+  state.itemStartTs = performance.now();
+}
+
+function refreshNextEnabled(){
+  const aSel = document.querySelector('input[name=taskA]:checked');
+  const bSel = document.querySelector('input[name=taskB]:checked');
+  $('nextBtn').disabled = !($('confirmCheck').checked && aSel && bSel);
+}
+
+function saveCurrentResponse(){
+  const item = state.items[state.order[state.pos]];
+  const aSel = document.querySelector('input[name=taskA]:checked');
+  const bSel = document.querySelector('input[name=taskB]:checked');
+  if (!aSel || !bSel || !$('confirmCheck').checked) return false;
+  const ms = Math.round(performance.now() - state.itemStartTs);
+  const prevExisting = state.responses[keyFor(item)];
+  state.responses[keyFor(item)] = {
+    sample_id: item.sample_id,
+    step_id: item.step_id,
+    taskA_step_type: aSel.value,
+    taskA_options_shown: state.itemOptions[keyFor(item)] || null,
+    taskB_role: bSel.value,
+    confirmed: true,
+    viewed_context: $('contextDetails').dataset.viewed === '1',
+    notes: $('notesField').value.trim(),
+    time_ms: (prevExisting ? (prevExisting.time_ms || 0) : 0) + ms,
+    timestamp: new Date().toISOString()
+  };
+  persistLocal();
+  return true;
+}
+
+function persistLocal(){
+  try {
+    localStorage.setItem(storageKey(), JSON.stringify({ responses: state.responses, itemOptions: state.itemOptions, order: state.order }));
+  } catch(e){ console.error('persistLocal error:', e); }
+}
+
+function initNav(){
+  // Delegated listeners, attached once. Previously Task A had none, so picking
+  // a Task A option last never enabled "Next"; Task B's was re-added every session.
+  ['taskAOptions', 'taskBOptions'].forEach(id => {
+    $(id).addEventListener('change', () => { updateCheckedStyles(); refreshNextEnabled(); });
+  });
+
+  $('nextBtn').addEventListener('click', () => {
+    if (!saveCurrentResponse()) return;
+    if (state.pos === state.order.length - 1) {
+      showFinish();
+    } else {
+      state.pos++;
+      renderItem();
+    }
+  });
+  $('prevBtn').addEventListener('click', () => {
+    saveCurrentResponse();
+    if (state.pos > 0) { state.pos--; renderItem(); }
+  });
+  $('confirmCheck').addEventListener('change', refreshNextEnabled);
+}
+
+/* ---------------- finish / export ---------------- */
+
+function buildExport(){
+  return {
+    annotator_id: state.annotatorId,
+    exported_at: new Date().toISOString(),
+    n_items: state.order.length,
+    n_answered: Object.keys(state.responses).length,
+    annotations: state.order.map(i => {
+      const item = state.items[i];
+      const r = state.responses[keyFor(item)];
+      return r ? r : {
+        sample_id: item.sample_id, step_id: item.step_id,
+        taskA_step_type: null, taskA_options_shown: state.itemOptions[keyFor(item)] || null,
+        taskB_role: null, confirmed: false, viewed_context: false, notes: '', time_ms: null, timestamp: null
+      };
+    })
+  };
+}
+
+function downloadJson(obj, filename){
+  const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function initFinishAndSave(){
+  $('saveProgressBtn').addEventListener('click', () => {
+    saveCurrentResponse();
+    downloadJson(buildExport(), `traces_annotations_${state.annotatorId}_progress.json`);
+  });
+
+  $('downloadBtn').addEventListener('click', () => {
+    downloadJson(buildExport(), `traces_annotations_${state.annotatorId}.json`);
+  });
+
+  $('restartBtn').addEventListener('click', () => {
+    $('finishScreen').classList.add('hidden');
+    $('setupScreen').classList.remove('hidden');
+    $('progressTrack').classList.add('hidden');
+    $('saveProgressBtn').classList.add('hidden');
+    $('glossaryLinkBtn').classList.add('hidden');
+    $('topSub').innerHTML = DEFAULT_SUB_HTML;
+  });
+}
+
+function showFinish(){
+  $('annoScreen').classList.add('hidden');
+  $('finishScreen').classList.remove('hidden');
+  $('progressFill').style.width = '100%';
+
+  const answered = Object.keys(state.responses).length;
+  let agree = 0, agreeTotal = 0;
+  const macroCounts = {};
+  Object.values(state.responses).forEach(r => {
+    macroCounts[r.taskB_role] = (macroCounts[r.taskB_role]||0) + 1;
+  });
+  state.order.forEach(i => {
+    const item = state.items[i];
+    const r = state.responses[keyFor(item)];
+    if (r && item.category) {
+      agreeTotal++;
+      if (r.taskA_step_type === item.category) agree++;
+    }
+  });
+
+  $('finishStats').innerHTML = `
+    <div class="stat"><div class="num">${answered}/${state.order.length}</div><div class="lbl">items annotated</div></div>
+    <div class="stat"><div class="num">${agreeTotal ? Math.round(100*agree/agreeTotal) + '%' : '—'}</div><div class="lbl">Task A agreement with GPT-4o-mini</div></div>
+    ${MACRO.map(m => `<div class="stat"><div class="num">${macroCounts[m.id]||0}</div><div class="lbl">${escapeHtml(m.label)}</div></div>`).join('')}
+  `;
+}
+
+/* ---------------- boot ---------------- */
+
+const DEFAULT_SUB_HTML = $('topSub').innerHTML;
+
+initSetupScreen();
+initNav();
+initFinishAndSave();
+</script>
+</body>
+</html>
