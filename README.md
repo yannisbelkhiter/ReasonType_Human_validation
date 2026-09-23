@@ -7,7 +7,7 @@ You will label individual reasoning steps taken from DeepSeek-14B solutions to M
 | | |
 |---|---|
 | **Items to annotate** | `52` steps |
-| **Estimated time** | `30-45` minutes |
+| **Estimated time** | `20-30` minutes |
 
 ---
 
@@ -26,10 +26,9 @@ You need to:
 4. Click **Start annotating**.
 5. For each item:
    1. Read the **problem** and the **step to annotate**.
-   2. Tick *"I've read the problem and this step carefully."*
-   3. Answer **Task A** (step-type) and **Task B** (overall role).
-   4. Optionally add a **note** if the step was ambiguous.
-   5. Click **Next**. 
+   2. Pick the step-type.
+   3. Optionally add a **note** if the step was ambiguous.
+   4. Click **Next**.
 6. On the last item, click **Finish**, then **Download annotations (.json)**.
 7. Upload the downloaded file to the `results_annotation/` folder.
 
@@ -37,12 +36,12 @@ You need to:
 
 - **Problem**: the MATH500 problem the step belongs to.
 - **Step to annotate**: the single reasoning step you are labelling (highlighted box). This is the same information GPT-4o-mini received. Earlier steps of the trace are not shown.
-- **Task A** and **Task B**: described below.
+- **Step-type**: described below.
 - **Taxonomy reference** (top right): opens the definitions at any time.
 
-## 4. The two tasks
+## 4. The task
 
-### Task A: Step-type (choose 1 of 4)
+### Step-type (choose 1 of 4)
 
 Pick the option that best describes what the step is doing. Exactly one of the four options is the label GPT-4o-mini gave; the other three are drawn at random from the rest of the 14 classes, so there is no pattern to read into which distractors appear.
 
@@ -82,20 +81,10 @@ Pick the option that best describes what the step is doing. Exactly one of the f
 
 The phase headings only describe where a step-type *typically* occurs. They are a reading aid, not a rule: a step can be any type at any point in the solution.
 
-### Task B: Overall role (choose 1 of 3)
-
-Say what role the step plays in the solution as a whole.
-
-| Role | Definition | Made up of |
-|---|---|---|
-| **Constructive** | Grounds the reasoning in the given problem by restating the setup or recalling a definition. Involves **no** computation and **no** self-reflection. | Problem Re-statement / Setup, Definition Recall |
-| **Evaluative** | Assesses the validity of a previous step or of the overall approach, or states the final answer. | Verification / Sanity Check, Final Conclusion / Boxed Answer |
-| **Other** | Does not fit Constructive or Evaluative, for example computing, rewriting, case analysis, exploring alternatives, or self-talk. | The remaining 10 step-types |
-
 ## 5. Tips for consistent labels
 
 These are suggestions to keep annotators aligned, not extra rules.
 
-- **Judge what the step does, and how it starts.** Look at the step's main purpose. "Wait..." or "So..." at the start of a step can also help to decisde.
+- **Judge what the step does, and how it starts.** Look at the step's main purpose. "Wait..." or "So..." at the start of a step can also help to decide.
 - **If a step does several things, choose the one that is its main purpose.** Use your note field to mention the second one.
 - **Flag ambiguity in the Notes box.** Notes on hard cases are valuable; they help us refine the taxonomy.
