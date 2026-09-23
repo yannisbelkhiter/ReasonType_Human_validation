@@ -204,26 +204,15 @@ window.MathJax = {
     </div>
 
     <div class="card">
-      <h2 class="card-title">The two tasks, per step</h2>
-      <div class="task-pair">
-        <div class="task-box">
-          <h3>Task A — Step-type</h3>
-          <p>Pick the one correct step-type out of 4 options (1 correct + 3 incorrect, drawn from the full 14-class taxonomy).</p>
-        </div>
-        <div class="task-box">
-          <h3>Task B — Overall role</h3>
-          <p>Say whether the step plays a <strong>Constructive</strong>, <strong>Evaluative</strong>, or <strong>Other</strong> role in the solution.</p>
-        </div>
+      <h2 class="card-title">The task, per step</h2>
+      <div class="task-box">
+        <h3>Step-type</h3>
+        <p>Pick the one correct step-type out of 4 options (1 correct + 3 incorrect, drawn from the full 14-class taxonomy).</p>
       </div>
-      <p class="muted">The two tasks are answered separately — your Task B answer never restricts which Task A options you see, and vice versa.</p>
 
       <details class="glossary" id="glossaryDetails">
-        <summary>Task A glossary: the 14 step-types, grouped by where they typically occur</summary>
+        <summary>Glossary: the 14 step-types, grouped by where they typically occur</summary>
         <div id="glossaryBody"></div>
-      </details>
-      <details class="glossary" id="roleGlossaryDetails">
-        <summary>Task B glossary: the 3 overall roles</summary>
-        <div id="roleGlossaryBody"></div>
       </details>
     </div>
 
@@ -279,21 +268,11 @@ window.MathJax = {
       </details>
     </div>
 
-    <div class="confirm-row">
-      <input type="checkbox" id="confirmCheck">
-      <label for="confirmCheck">I've read the problem and this step carefully.</label>
-    </div>
-
     <div class="notice hidden" id="unknownCategoryNotice"></div>
 
     <div class="block">
-      <h2>Task A — Step-type (choose 1 of 4)</h2>
+      <h2>Step-type (choose 1 of 4)</h2>
       <fieldset id="taskAFieldset"><div class="options" id="taskAOptions"></div></fieldset>
-    </div>
-
-    <div class="block">
-      <h2>Task B — Overall role of the step</h2>
-      <fieldset id="taskBFieldset"><div class="options" id="taskBOptions"></div></fieldset>
     </div>
 
     <div class="field">
@@ -331,11 +310,6 @@ window.MathJax = {
    FULL 14-CLASS TAXONOMY.
    `phase` groups classes for display/reading only — it does not gate any
    answer choice.
-   `macro` is the Task B role each step-type belongs to:
-     constructive = Problem Re-statement / Setup, Definition Recall
-     evaluative   = Verification / Sanity Check, Final Conclusion / Boxed Answer
-     other        = every remaining step-type
-   Task A and Task B are answered independently by annotators.
    Classes flagged isNew had their short definitions written from the
    ReasonType diagram (not the source PDF) — please check them against yours.
    ========================================================================= */
@@ -346,30 +320,21 @@ const PHASES = [
   { id: 'end',   label: 'End-reasoning (Conclusion)' }
 ];
 
-const MACRO = [
-  { id: 'constructive', label: 'Constructive',
-    desc: 'Grounds the reasoning in the given problem by restating the setup or recalling a definition. Involves no computation and no self-reflection.' },
-  { id: 'evaluative',   label: 'Evaluative',
-    desc: 'Assesses the validity of a previous step or of the overall approach, or states the final answer.' },
-  { id: 'other',        label: 'Other',
-    desc: 'Does not fit Constructive or Evaluative (e.g. computing, rewriting, case analysis, exploring alternatives, self-talk).' }
-];
-
 const TAXONOMY = [
-  { name: 'Problem Re-statement / Setup',              phase: 'setup', macro: 'constructive', desc: 'Restates or rephrases the problem/question without adding new content.', isNew: true },
-  { name: 'Context Repetition / Paraphrasing',         phase: 'setup', macro: 'other',        desc: 'Repeats given information or prior results without transforming them.', isNew: true },
-  { name: 'Definition Recall',                         phase: 'setup', macro: 'constructive', desc: 'Recalls a definition, theorem, or known fact relevant to the problem.' },
-  { name: 'Formula Substitution / Plugging In',        phase: 'mid',   macro: 'other',        desc: 'Substitutes values into a formula or expression.' },
-  { name: 'Symbolic Transformation / Rewriting Sums',  phase: 'mid',   macro: 'other',        desc: 'Algebraically rewrites or simplifies an expression.' },
-  { name: 'Quadrant/Edge Case Consideration',          phase: 'mid',   macro: 'other',        desc: 'Considers a specific case, region, sign, or edge condition.' },
-  { name: 'Pattern Recognition / Symmetry',            phase: 'mid',   macro: 'other',        desc: 'Notices a pattern, regularity, or symmetry that guides the solution.', isNew: true },
-  { name: 'Verification / Sanity Check',               phase: 'late',  macro: 'evaluative',   desc: 'Checks a prior result for correctness or consistency.' },
-  { name: 'Heuristics / Intuition',                    phase: 'late',  macro: 'other',        desc: 'Uses an informal heuristic or intuition to pick an approach.' },
-  { name: 'Alternative Approach Exploration',          phase: 'late',  macro: 'other',        desc: 'Tries a different method or explores another path to the solution.', isNew: true },
-  { name: 'Numerical Approximation / Interpretation',  phase: 'late',  macro: 'other',        desc: 'Approximates a quantity numerically, or interprets what a computed result means in context.', isNew: true },
-  { name: 'Meta-Cognition / Self-Talk',                phase: 'late',  macro: 'other',        desc: 'Reflects on its own reasoning process ("wait", "let me reconsider").' },
-  { name: 'Final Conclusion / Boxed Answer',           phase: 'end',   macro: 'evaluative',   desc: 'States the final answer.' },
-  { name: 'Other',                                     phase: 'end',   macro: 'other',        desc: 'Doesn\'t fit any other category.', isNew: true }
+  { name: 'Problem Re-statement / Setup',              phase: 'setup', desc: 'Restates or rephrases the problem/question without adding new content.', isNew: true },
+  { name: 'Context Repetition / Paraphrasing',         phase: 'setup', desc: 'Repeats given information or prior results without transforming them.', isNew: true },
+  { name: 'Definition Recall',                         phase: 'setup', desc: 'Recalls a definition, theorem, or known fact relevant to the problem.' },
+  { name: 'Formula Substitution / Plugging In',        phase: 'mid',   desc: 'Substitutes values into a formula or expression.' },
+  { name: 'Symbolic Transformation / Rewriting Sums',  phase: 'mid',   desc: 'Algebraically rewrites or simplifies an expression.' },
+  { name: 'Quadrant/Edge Case Consideration',          phase: 'mid',   desc: 'Considers a specific case, region, sign, or edge condition.' },
+  { name: 'Pattern Recognition / Symmetry',            phase: 'mid',   desc: 'Notices a pattern, regularity, or symmetry that guides the solution.', isNew: true },
+  { name: 'Verification / Sanity Check',               phase: 'late',  desc: 'Checks a prior result for correctness or consistency.' },
+  { name: 'Heuristics / Intuition',                    phase: 'late',  desc: 'Uses an informal heuristic or intuition to pick an approach.' },
+  { name: 'Alternative Approach Exploration',          phase: 'late',  desc: 'Tries a different method or explores another path to the solution.', isNew: true },
+  { name: 'Numerical Approximation / Interpretation',  phase: 'late',  desc: 'Approximates a quantity numerically, or interprets what a computed result means in context.', isNew: true },
+  { name: 'Meta-Cognition / Self-Talk',                phase: 'late',  desc: 'Reflects on its own reasoning process ("wait", "let me reconsider").' },
+  { name: 'Final Conclusion / Boxed Answer',           phase: 'end',   desc: 'States the final answer.' },
+  { name: 'Other',                                     phase: 'end',   desc: 'Doesn\'t fit any other category.', isNew: true }
 ];
 const TAXONOMY_BY_NAME = {};
 TAXONOMY.forEach(t => TAXONOMY_BY_NAME[t.name] = t);
@@ -392,7 +357,7 @@ let state = {
   items: [],             // [{sample_id, step_id, step, category, ...}]
   problems: {},          // sample_id -> text
   fullIndex: {},         // sample_id -> [{step_id, step}] sorted asc
-  responses: {},         // key -> {taskA_step_type, taskB_role, notes, viewed_context, confirmed, time_ms, timestamp, ...}
+  responses: {},         // key -> {taskA_step_type, notes, viewed_context, time_ms, timestamp, ...}
   itemOptions: {},       // key -> [name, name, name, name] (cached Task A option set)
   order: [],             // array of indices into items, defines display order
   pos: 0,
@@ -537,23 +502,8 @@ function renderGlossary(){
   }).join('');
 }
 
-function renderRoleGlossary(){
-  return MACRO.map(m => {
-    const members = TAXONOMY.filter(t => t.macro === m.id);
-    const includes = m.id === 'other'
-      ? `Any step that is neither Constructive nor Evaluative, i.e. the remaining ${members.length} step-types.`
-      : `Made up exclusively of: ${members.map(t => escapeHtml(t.name)).join(' and ')}.`;
-    return `<div class="phase-group">
-      <div class="phase-title">${escapeHtml(m.label)}</div>
-      <div class="gloss-item"><span class="g-desc">${escapeHtml(m.desc)}</span></div>
-      <div class="gloss-item"><span class="g-desc">${includes}</span></div>
-    </div>`;
-  }).join('');
-}
-
 function renderFullReference(){
-  return `<h3 style="font-size:0.9rem; margin:0 0 4px;">Task A — step-types</h3>${renderGlossary()}
-    <h3 style="font-size:0.9rem; margin:18px 0 4px;">Task B — overall roles</h3>${renderRoleGlossary()}`;
+  return renderGlossary();
 }
 
 /* ---------------- setup screen wiring ---------------- */
@@ -591,7 +541,6 @@ function canonicalizeCategories(items){
 
 function initSetupScreen(){
   $('glossaryBody').innerHTML = renderGlossary();
-  $('roleGlossaryBody').innerHTML = renderRoleGlossary();
 
   $('annotatorId').addEventListener('input', () => {
     refreshStartEnabled();
@@ -731,7 +680,6 @@ function beginSession(resume){
     state.pos = firstUnanswered === -1 ? order.length - 1 : firstUnanswered;
   }
 
-  buildTaskBOptionsUI();
   $('setupScreen').classList.add('hidden');
   $('annoScreen').classList.remove('hidden');
   $('finishScreen').classList.add('hidden');
@@ -739,21 +687,6 @@ function beginSession(resume){
   $('saveProgressBtn').classList.remove('hidden');
   $('glossaryLinkBtn').classList.remove('hidden');
   renderItem();
-}
-
-/* ---------------- Task B option UI (static, rebuilt each session) ---------------- */
-
-function buildTaskBOptionsUI(){
-  const wrap = $('taskBOptions');
-  wrap.innerHTML = '';
-  MACRO.forEach(m => {
-    const div = document.createElement('label');
-    div.className = 'opt';
-    div.innerHTML = `<input type="radio" name="taskB" value="${escapeHtml(m.id)}">
-      <div><div class="opt-name">${escapeHtml(m.label)}</div><div class="opt-desc">${escapeHtml(m.desc)}</div></div>`;
-    wrap.appendChild(div);
-  });
-  // (change listeners for both tasks are attached once in initNav)
 }
 
 /* ---------------- Task A option generation (per item, cached) ---------------- */
@@ -852,11 +785,7 @@ function renderItem(){
   details.dataset.viewed = existing && existing.viewed_context ? '1' : '0';
   details.ontoggle = () => { if (details.open) details.dataset.viewed = '1'; };
 
-  $('confirmCheck').checked = !!(existing && existing.confirmed);
   buildTaskAOptionsUI(item, existing);
-  // saved responses store the answer under taskB_role (was wrongly read from .taskB)
-  const savedB = existing ? existing.taskB_role : null;
-  document.querySelectorAll('input[name=taskB]').forEach(r => { r.checked = !!savedB && r.value === savedB; });
   $('notesField').value = existing ? (existing.notes || '') : '';
   updateCheckedStyles();
 
@@ -869,15 +798,13 @@ function renderItem(){
 
 function refreshNextEnabled(){
   const aSel = document.querySelector('input[name=taskA]:checked');
-  const bSel = document.querySelector('input[name=taskB]:checked');
-  $('nextBtn').disabled = !($('confirmCheck').checked && aSel && bSel);
+  $('nextBtn').disabled = !aSel;
 }
 
 function saveCurrentResponse(){
   const item = state.items[state.order[state.pos]];
   const aSel = document.querySelector('input[name=taskA]:checked');
-  const bSel = document.querySelector('input[name=taskB]:checked');
-  if (!aSel || !bSel || !$('confirmCheck').checked) return false;
+  if (!aSel) return false;
   const ms = Math.round(performance.now() - state.itemStartTs);
   const prevExisting = state.responses[keyFor(item)];
   state.responses[keyFor(item)] = {
@@ -885,8 +812,6 @@ function saveCurrentResponse(){
     step_id: item.step_id,
     taskA_step_type: aSel.value,
     taskA_options_shown: state.itemOptions[keyFor(item)] || null,
-    taskB_role: bSel.value,
-    confirmed: true,
     viewed_context: $('contextDetails').dataset.viewed === '1',
     notes: $('notesField').value.trim(),
     time_ms: (prevExisting ? (prevExisting.time_ms || 0) : 0) + ms,
@@ -903,11 +828,8 @@ function persistLocal(){
 }
 
 function initNav(){
-  // Delegated listeners, attached once. Previously Task A had none, so picking
-  // a Task A option last never enabled "Next"; Task B's was re-added every session.
-  ['taskAOptions', 'taskBOptions'].forEach(id => {
-    $(id).addEventListener('change', () => { updateCheckedStyles(); refreshNextEnabled(); });
-  });
+  // Delegated listener, attached once.
+  $('taskAOptions').addEventListener('change', () => { updateCheckedStyles(); refreshNextEnabled(); });
 
   $('nextBtn').addEventListener('click', () => {
     if (!saveCurrentResponse()) return;
@@ -922,7 +844,6 @@ function initNav(){
     saveCurrentResponse();
     if (state.pos > 0) { state.pos--; renderItem(); }
   });
-  $('confirmCheck').addEventListener('change', refreshNextEnabled);
 }
 
 /* ---------------- finish / export ---------------- */
@@ -939,7 +860,7 @@ function buildExport(){
       return r ? r : {
         sample_id: item.sample_id, step_id: item.step_id,
         taskA_step_type: null, taskA_options_shown: state.itemOptions[keyFor(item)] || null,
-        taskB_role: null, confirmed: false, viewed_context: false, notes: '', time_ms: null, timestamp: null
+        viewed_context: false, notes: '', time_ms: null, timestamp: null
       };
     })
   };
@@ -981,10 +902,6 @@ function showFinish(){
 
   const answered = Object.keys(state.responses).length;
   let agree = 0, agreeTotal = 0;
-  const macroCounts = {};
-  Object.values(state.responses).forEach(r => {
-    macroCounts[r.taskB_role] = (macroCounts[r.taskB_role]||0) + 1;
-  });
   state.order.forEach(i => {
     const item = state.items[i];
     const r = state.responses[keyFor(item)];
@@ -996,8 +913,7 @@ function showFinish(){
 
   $('finishStats').innerHTML = `
     <div class="stat"><div class="num">${answered}/${state.order.length}</div><div class="lbl">items annotated</div></div>
-    <div class="stat"><div class="num">${agreeTotal ? Math.round(100*agree/agreeTotal) + '%' : '—'}</div><div class="lbl">Task A agreement with GPT-4o-mini</div></div>
-    ${MACRO.map(m => `<div class="stat"><div class="num">${macroCounts[m.id]||0}</div><div class="lbl">${escapeHtml(m.label)}</div></div>`).join('')}
+    <div class="stat"><div class="num">${agreeTotal ? Math.round(100*agree/agreeTotal) + '%' : '—'}</div><div class="lbl">agreement with GPT-4o-mini</div></div>
   `;
 }
 
